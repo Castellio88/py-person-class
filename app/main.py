@@ -1,13 +1,16 @@
-class Person:
-    people = {}
+from typing import Dict, List
 
-    def __init__(self, name, age):
+
+class Person:
+    people: Dict[str, "Person"] = {}
+
+    def __init__(self, name: str, age: int) -> None:
         self.name = name
         self.age = age
         Person.people[self.name] = self
 
 
-def create_person_list(people):
+def create_person_list(people: List[Dict]) -> List["Person"]:
     person_list = [Person(data["name"], data["age"]) for data in people]
 
     for data in people:
