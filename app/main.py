@@ -8,24 +8,17 @@ class Person:
 
 
 def create_person_list(people):
-    person_objects = []
+    person_list = [Person(data["name"], data["age"]) for data in people]
 
-    # 1. Создаём все объекты Person
-    for data in people:
-        person = Person(data["name"], data["age"])
-        person_objects.append(person)
-
-    # 2. Устанавливаем wife/husband
     for data in people:
         person = Person.people[data["name"]]
 
-        spouse_name = data.get("wife") or data.get("husband")
-        if spouse_name is None:
-            continue
+        wife_name = data.get("wife")
+        if wife_name:
+            person.wife = Person.people[wife_name]
 
-        if "wife" in data:
-            person.wife = Person.people[spouse_name]
-        else:
-            person.husband = Person.people[spouse_name]
+        husband_name = data.get("husband")
+        if husband_name:
+            person.husband = Person.people[husband_name]
 
-    return person_objects
+    return person_list
